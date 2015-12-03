@@ -11,6 +11,8 @@
 |
 */
 
+Route::get('/prueba', 'prueba@index');
+
 Route::get('/', 'AppController@index');
 
 // User authentication routes
@@ -19,4 +21,9 @@ Route::post('/auth/login','AuthController@login');
 //Route::get('/auth/register','AuthController@register');
 Route::get('/auth/logout','AuthController@logout');
 
+
+Route::get('eventos','EventoController@index');
+
+Route::get('/reporte/instalacion','Reporte@index');
+Route::get('/reporte/instalacion/create','Reporte@createPdf');
 

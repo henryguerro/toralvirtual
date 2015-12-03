@@ -24,7 +24,12 @@ class ResponseMacroServiceProvider extends ServiceProvider
             if (!array_key_exists( 'success' , $value )){
                 $value['success']=true;
             }
-            return response()->make($value, $status=200, $header, JSON_UNESCAPED_UNICODE);
+
+            if (array_key_exists( 'data' , $value )){
+                $value['total']=count($value['data']);
+            }
+
+            return response()->json($value, $status=200, $header, JSON_UNESCAPED_UNICODE);
         });
     }
 

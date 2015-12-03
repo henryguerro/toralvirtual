@@ -37,12 +37,12 @@ class AuthController extends Controller
             'password'  => $request->input('clave')
         ];
 
+        $usuario = User::whereUsuario($post_data['usuario'])->first();
 
-        if (User::whereUsuario($post_data['usuario'])->
-            whereClave($post_data['password'])
-            ->first()) {
 
-            return $this->verificarEstatus($post_data);
+        if ($usuario->clave === $post_data['password']) {
+
+            return $this->verificarEstatus($usuario);
 
         } else {
 
@@ -54,14 +54,9 @@ class AuthController extends Controller
         }
     }
 
-    private function verificarEstatus(array $user)
+    private function verificarEstatus(User $usuario)
     {
-        if (User::whereUsuario($user['usuario'])
-            ->whereEstatus(1)->first()) {
-
-            $usuario = new User();
-            $usuario->usuario   = $user['usuario'];
-            $usuario->clave     = $user['password'];
+        if ($usuario->estatus) {
 
             Auth::login($usuario);
 
@@ -72,7 +67,7 @@ class AuthController extends Controller
         } else {
             return response()->ext([
                 'success' => false,
-                'msg'   => $user['usuario'].' se encuentra Deshabilitado'
+                'msg'   => $usuario->usuario.' se encuentra Deshabilitado'
             ]);
         }
     }

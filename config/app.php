@@ -151,6 +151,8 @@ return [
          * Plugins de Terceros
          */
 
+        Elibyy\TCPDF\ServiceProvider::class,
+
     ],
 
     /*
